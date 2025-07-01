@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Акции магазинов</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; background: #f0f0f0; }
+    h2 { margin-bottom: 10px; }
+    select { font-size: 16px; padding: 6px; margin-bottom: 20px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th { background: #eee; }
+    .Чудо { background-color: #c3f0ca; }
+    .Класс { background-color: #f0e68c; }
+    .Посад { background-color: #ffcccb; }
+    .АТБ { background-color: #cce5ff; }
+  </style>
+</head>
+<body>
+  <h2>Акции с 21.07.2025 по 23.08.2025</h2>
+
+  <label for="storeFilter">Выберите магазин:</label>
+  <select id="storeFilter">
+    <option value="">Все магазины</option>
+    <option value="Чудо">Чудо</option>
+    <option value="Класс">Класс</option>
+    <option value="Посад">Посад</option>
+    <option value="АТБ">АТБ</option>
+  </select>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Магазин</th>
+        <th>Дата</th>
+        <th>Описание</th>
+      </tr>
+    </thead>
+    <tbody id="promoBody"></tbody>
+  </table>
+
+  <script>
+    const promos = [
+      { store: "Чудо", date: "21.07.2025", description: "Клуб 4 лапы, телятина 85 г" },
+      { store: "Чудо", date: "21.07.2025", description: "Клуб 4 лапы, лосось  85 г" },
+      { store: "Класс", date: "24.07.2025", description: "Скидка на напитки" },
+      { store: "Посад", date: "21.07.2025", description: "Клуб 4 лапы, лосось" },
+      { store: "Посад", date: "23.09.2025", description: "Мяу 900 г" },
+      { store: "АТБ", date: "15.08.2025", description: "Супер цена на печенье" }
+    ];
+
+    const promoBody = document.getElementById("promoBody");
+    const storeFilter = document.getElementById("storeFilter");
+
+    function renderTable(store = "") {
+      promoBody.innerHTML = "";
+
+      const filteredPromos = store
+        ? promos.filter(p => p.store === store)
+        : promos;
+
+      filteredPromos.forEach(promo => {
+        const row = document.createElement("tr");
+        row.className = promo.store;
+        row.innerHTML = `
+          <td>${promo.store}</td>
+          <td>${promo.date}</td>
+          <td>${promo.description}</td>
+        `;
+        promoBody.appendChild(row);
+      });
+    }
+
+    storeFilter.addEventListener("change", () => {
+      renderTable(storeFilter.value);
+    });
+
+    renderTable(); // начальный вывод
+  </script>
+</body>
+</html>
